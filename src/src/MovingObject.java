@@ -25,7 +25,33 @@ public class MovingObject {
     }
 
     public void Eliminar(int t, Trayectoria trayectoria) {
+        if(this.cabeza == null) {
+            return;
+        }else{
+            if(this.cabeza.tiempo == t) {
+                this.cabeza = cabeza.siguiente;
+                return;
+            }
+        }
+
+        NodoTrayectoria anterior= this.cabeza;
+        NodoTrayectoria actual = cabeza.siguiente;
+        while(actual != null) {
+
+            if(actual.siguiente.tiempo == t) {
+                anterior.siguiente=actual.siguiente;
+                return;
+            }
+
+            anterior= actual;
+            actual=actual.siguiente;
+        }
+
+
+
     }
+
+
     public float Distancia(){return 0;}
     public boolean Intersectan(MovingObject movingObject){return false;}
     public boolean IntersectaRangeST(Trayectoria rEsquina1, Trayectoria rEsquina2, int t1, int t2 ){return false;}
