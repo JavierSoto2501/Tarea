@@ -9,10 +9,23 @@ public class MovingObject {
     }
 
     public void Insertar(int t, Trayectoria trayectoria) {
+        NodoTrayectoria punto = new NodoTrayectoria(t, trayectoria);
+        if(this.cabeza == null || t< this.cabeza.tiempo) {
+            punto.siguiente = this.cabeza;
+            this.cabeza = punto;
+            return;
+        }
 
+        NodoTrayectoria actual = this.cabeza;
+        while(actual != null && actual.siguiente.tiempo < t) {
+            actual=actual.siguiente;
+        }
+        punto.siguiente = actual;
+        actual.siguiente=punto;
     }
 
-    public void Eliminar(int t, Trayectoria trayectoria) {}
+    public void Eliminar(int t, Trayectoria trayectoria) {
+    }
     public float Distancia(){return 0;}
     public boolean Intersectan(MovingObject movingObject){return false;}
     public boolean IntersectaRangeST(Trayectoria rEsquina1, Trayectoria rEsquina2, int t1, int t2 ){return false;}

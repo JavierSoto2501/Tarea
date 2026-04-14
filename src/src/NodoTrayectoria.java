@@ -1,10 +1,10 @@
 public class NodoTrayectoria {
-    int i;
+    int tiempo;
     Trayectoria trayectoria;
     NodoTrayectoria siguiente;
 
-    public NodoTrayectoria(int i, Trayectoria trayectoria) {
-        this.i = i;
+    public NodoTrayectoria(int tiempo, Trayectoria trayectoria) {
+        this.tiempo = tiempo;
         this.trayectoria = trayectoria;
         this.siguiente = null;
     }

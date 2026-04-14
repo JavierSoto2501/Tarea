@@ -1,10 +1,10 @@
     public class Trayectoria {
-        private int t;
-        private int p;
+        private int x;
+        private int y;
 
-        public Trayectoria(int t, int p) {
-            this.t = t;
-            this.p = p;
+        public Trayectoria(int x, int y) {
+            this.x = x;
+            this.y = y;
         }
 
 
