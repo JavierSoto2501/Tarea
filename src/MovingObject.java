@@ -52,7 +52,25 @@ public class MovingObject {
     }
 
 
-    public float Distancia(){return 0;}
+    public float Distancia(){
+        if(this.cabeza==null || this.cabeza.siguiente==null)return 0;
+        float distancia=0;
+        NodoTrayectoria actual =  this.cabeza;
+        NodoTrayectoria siguiente= this.cabeza.siguiente;
+        while(siguiente!=null){
+            float x1= actual.trayectoria.x;
+            float y1= actual.trayectoria.y;
+
+            float x2= siguiente.trayectoria.x;
+            float y2= siguiente.trayectoria.y;
+
+            distancia+= (float) Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y2-y1,2));
+
+            actual= actual.siguiente;
+            siguiente= actual.siguiente;
+        }
+        return distancia;
+    }
     public boolean Intersectan(MovingObject movingObject){return false;}
     public boolean IntersectaRangeST(Trayectoria rEsquina1, Trayectoria rEsquina2, int t1, int t2 ){return false;}
 
