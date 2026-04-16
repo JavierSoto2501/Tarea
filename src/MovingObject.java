@@ -72,6 +72,39 @@ public class MovingObject {
         return distancia;
     }
     public boolean Intersectan(MovingObject movingObject){return false;}
-    public boolean IntersectaRangeST(Trayectoria rEsquina1, Trayectoria rEsquina2, int t1, int t2 ){return false;}
+    public boolean IntersectaRangeST(Trayectoria rEsquina1, Trayectoria rEsquina2, int t1, int t2 ){
+       int xMin, xMax, yMin, yMax;
+
+        if(rEsquina1.x<rEsquina2.x){
+            xMin= rEsquina1.x;
+            xMax= rEsquina2.x;
+        }else{
+            xMin= rEsquina2.x;
+            xMax= rEsquina1.x;
+        }
+        if(rEsquina1.y<rEsquina2.y){
+            yMin= rEsquina1.y;
+            yMax= rEsquina2.y;
+        }else{
+            yMin= rEsquina2.y;
+            yMax= rEsquina1.y;
+        }
+
+        NodoTrayectoria actual= this.cabeza;
+        NodoTrayectoria  siguiente= this.cabeza.siguiente;
+        while(siguiente!=null){
+            if(siguiente.tiempo>=t1 && actual.tiempo<=t2){
+                if(actual.trayectoria.x>= xMin && actual.trayectoria.x<= xMax && actual.trayectoria.y>= yMin && actual.trayectoria.y<= yMax
+                || siguiente.trayectoria.x>= xMin && siguiente.trayectoria.x<= xMax && siguiente.trayectoria.y>= yMin && siguiente.trayectoria.y<= yMax){
+                    return true;
+                }
+
+            }
+
+            actual= actual.siguiente;
+            siguiente= actual.siguiente;
+        }
+        return false;
+    }
 
 }
