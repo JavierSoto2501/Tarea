@@ -17,10 +17,10 @@ public class MovingObject {
         }
 
         NodoTrayectoria actual = this.cabeza;
-        while(actual != null && actual.siguiente.tiempo < t) {
+        while(actual.siguiente != null && actual.siguiente.tiempo < t) {
             actual=actual.siguiente;
         }
-        punto.siguiente = actual;
+        punto.siguiente = actual.siguiente;
         actual.siguiente=punto;
     }
 
@@ -38,7 +38,7 @@ public class MovingObject {
         NodoTrayectoria actual = cabeza.siguiente;
         while(actual != null) {
 
-            if(actual.siguiente.tiempo == t) {
+            if(actual.tiempo == t) {
                 anterior.siguiente=actual.siguiente;
                 return;
             }
