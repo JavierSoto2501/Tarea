@@ -153,9 +153,39 @@ public class MovingObject {
         NodoTrayectoria  siguiente= this.cabeza.siguiente;
         while(siguiente!=null){
             if(siguiente.tiempo>=t1 && actual.tiempo<=t2){
-                if(actual.trayectoria.x>= xMin && actual.trayectoria.x<= xMax && actual.trayectoria.y>= yMin && actual.trayectoria.y<= yMax
-                || siguiente.trayectoria.x>= xMin && siguiente.trayectoria.x<= xMax && siguiente.trayectoria.y>= yMin && siguiente.trayectoria.y<= yMax){
+
+                float x1= actual.trayectoria.x;
+                float x2= siguiente.trayectoria.x;
+                float y1= actual.trayectoria.y;
+                float y2= siguiente.trayectoria.y;
+
+                if(x1>= xMin && x1<= xMax && y1>= yMin && y1<= yMax
+                || x2>= xMin && x2<= xMax && y2>= yMin && y2<= yMax){
                     return true;
+                }
+
+                if ((y1 <= yMin && y2 >= yMin) || (y2 <= yMin && y1 >= yMin)) {
+                    float xCorte = x1 + (x2 - x1) * (yMin - y1) / (y2 - y1);
+                    if (xCorte >= xMin && xCorte <= xMax) return true;
+
+                }
+
+                if ((y1 <= yMax && y2 >= yMax) || (y2 <= yMax && y1 >= yMax)) {
+                    float xCorte = x1 + (x2 - x1) * (yMax - y1) / (y2 - y1);
+                    if (xCorte >= xMin && xCorte <= xMax) return true;
+
+                }
+
+                if ((x1 <= xMin && x2 >= xMin) || (x2 <= xMin && x1 >= xMin)) {
+                    float yCorte = y1 + (y2 - y1) * (xMin - x1) / (x2 - x1);
+                    if (yCorte >= yMin && yCorte <= yMax) return true;
+
+                }
+
+                if ((x1 <= xMax && x2 >= xMax) || (x2 <= xMax && x1 >= xMax)) {
+                    float yCorte = y1 + (y2 - y1) * (xMax - x1) / (x2 - x1);
+                    if (yCorte >= yMin && yCorte <= yMax) return true;
+
                 }
 
             }
