@@ -1,58 +1,142 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("=== PRUEBAS TAREA 1: TDA MovingObject ===\n");
 
-        // 1. Crear los objetos en movimiento
-        MovingObject obj1 = new MovingObject(1,null); // El objeto del PDF
-        MovingObject obj2 = new MovingObject(2, null); // Un objeto de prueba para chocar
-        System.out.println("Objetos instanciados correctamente.");
+        Scanner sc = new Scanner(System.in);
 
-        // 2. Probar el método Insertar con los datos exactos del PDF
-        // Trayectoria s = {<1,(3,2)>, <5,(5,8)>, <7,(10,5)>, <10,(15,6)>}
+// carga datos iniciales, son los que estan en el pdf de la tarea
+        MovingObject obj1 = new MovingObject(1,null);
+        MovingObject obj2 = new MovingObject(2, null);
+
         obj1.Insertar(1, new Trayectoria(3, 2));
         obj1.Insertar(5, new Trayectoria(5, 8));
         obj1.Insertar(7, new Trayectoria(10, 5));
         obj1.Insertar(10, new Trayectoria(15, 6));
-        System.out.println("Trayectoria de obj1 insertada. (Debe mantenerse ordenada por tiempo).");
 
-        // 3. Probar el método Distancia
-        System.out.println("\n--- Calculando Distancia ---");
-        float dist = obj1.Distancia();
-        System.out.println("Distancia total recorrida por obj1: " + dist);
-
-        // 4. Probar el método Intersectan
-        System.out.println("\n--- Probando Intersección de Trayectorias ---");
-        // Creamos una trayectoria para obj2 que cruce la primera línea de obj1 (de (3,2) a (5,8))
-        // Una línea horizontal desde (2,5) hasta (8,5) cruzará el muro formando una 'X'
         obj2.Insertar(2, new Trayectoria(2, 5));
         obj2.Insertar(6, new Trayectoria(8, 5));
 
-        boolean chocan = obj1.Intersectan(obj2);
-        System.out.println("¿obj1 y obj2 se intersectan físicamente?: " + chocan); // Debería retornar true
+        int opcion = 0;
 
-        // 5. Probar el método IntersectaRangeST (Rango Espacio-Temporal)
-        System.out.println("\n--- Probando Intersección en Rango (R, T) ---");
-        // Usamos el rectángulo R del PDF con esquinas (4,5) y (8,4) [cite: 236]
-        Trayectoria rEsquina1 = new Trayectoria(4, 5);
-        Trayectoria rEsquina2 = new Trayectoria(8, 4);
+        while (opcion != 6) {
+            System.out.println("------ Prueba Tarea 1 ------");
+            System.out.println("1) Insertar posicion");
+            System.out.println("2) Eliminar posicion");
+            System.out.println("3) Calcular distancia");
+            System.out.println("4) Analizar interseccion objeto1 y objeto2");
+            System.out.println("5) Analizar interseccion en rango");
+            System.out.println("6) Salir");
+            System.out.print("Elija una opcion: ");
 
-        // Prueba A: Intervalo de tiempo [1, 6] donde SÍ intersecta
-        boolean enRangoA = obj1.IntersectaRangeST(rEsquina1, rEsquina2, 1, 6);
-        System.out.println("¿Intersecta a R en el tiempo [1, 6]?: " + enRangoA + " (Esperado: true)");
+            opcion = sc.nextInt();
 
-        // Prueba B: Intervalo de tiempo [8, 10] donde NO intersecta
-        boolean enRangoB = obj1.IntersectaRangeST(rEsquina1, rEsquina2, 8, 10);
-        System.out.println("¿Intersecta a R en el tiempo [8, 10]?: " + enRangoB + " (Esperado: false)");
 
-        // 6. Probar el método Eliminar
-        System.out.println("\n--- Probando Eliminación ---");
-        // Vamos a eliminar el nodo intermedio <5, (5,8)>
-        obj1.Eliminar(5, new Trayectoria(5, 8));
-        System.out.println("Punto <5, (5,8)> eliminado.");
+            int id;
+            MovingObject o;
+            switch (opcion) {
+                case 1:
+                    System.out.println("Ingrese id del MovingObject (1 o 2)");
+                    id = sc.nextInt();
+                    if (id == 1) {
+                        o = obj1;
+                    } else{
+                        o = obj2;
+                    }
 
-        // Recalculamos la distancia para confirmar que el puente se hizo correctamente
-        float nuevaDist = obj1.Distancia();
-        System.out.println("Nueva distancia de obj1 (sin el punto intermedio): " + nuevaDist);
-        System.out.println("Si el programa no arroja error y la distancia cambia, el puente funciona.");
+                    System.out.println("-- INSERTAR --");
+                    System.out.print("Ingrese el tiempo (t): ");
+                    int tInsertar = sc.nextInt();
+                    System.out.print("Ingrese la coordenada X: ");
+                    int xInsertar = sc.nextInt();
+                    System.out.print("Ingrese la coordenada Y: ");
+                    int yInsertar = sc.nextInt();
+
+                    o.Insertar(tInsertar, new Trayectoria(xInsertar, yInsertar));
+                    break;
+
+                case 2:
+                    System.out.println("Ingrese id del MovingObject (1 o 2)");
+                    id = sc.nextInt();
+                    if (id == 1) {
+                        o = obj1;
+                    } else{
+                        o = obj2;
+                    }
+
+                    System.out.println("-- ELIMINAR --");
+                    System.out.print("Ingrese el tiempo del punto a borrar: ");
+                    int tBorrar = sc.nextInt();
+
+
+                    o.Eliminar(tBorrar, new Trayectoria(0, 0));
+                    System.out.println("Se ejecutó la eliminación.");
+                    break;
+
+                case 3:
+                    System.out.println("Ingrese id del MovingObject (1 o 2)");
+                    id = sc.nextInt();
+                    if (id == 1) {
+                        o = obj1;
+                    } else{
+                        o = obj2;
+                    }
+
+                    System.out.println("-- DISTANCIA TOTAL --");
+                    float dist = o.Distancia();
+                    System.out.println("La distancia total recorrida es: " + dist);
+                    break;
+
+                case 4:
+
+
+                    System.out.println("-- INTERSECTAN --");
+
+                    System.out.println("Intersectan: "+ obj1.Intersectan(obj2));
+                    break;
+
+                case 5:
+                    System.out.println("Ingrese id del MovingObject (1 o 2)");
+                    id = sc.nextInt();
+                    if (id == 1) {
+                        o = obj1;
+                    } else{
+                        o = obj2;
+                    }
+
+                    System.out.println("-- INTERSECTA RANGO --");
+                    System.out.println("Ingrese datos de la Esquina 1 (X Y): ");
+                    int e1X = sc.nextInt();
+                    int e1Y = sc.nextInt();
+
+                    System.out.println("Ingrese datos de la Esquina 2 (X Y): ");
+                    int e2X = sc.nextInt();
+                    int e2Y = sc.nextInt();
+
+                    System.out.print("Ingrese el tiempo inicial (t1): ");
+                    int t1 = sc.nextInt();
+                    System.out.print("Ingrese el tiempo final (t2): ");
+                    int t2 = sc.nextInt();
+
+                    Trayectoria esq1 = new Trayectoria(e1X, e1Y);
+                    Trayectoria esq2 = new Trayectoria(e2X, e2Y);
+
+                    boolean intersecta = o.IntersectaRangeST(esq1, esq2, t1, t2);
+                    System.out.println("El objeto intersecta en ese rango en ese tiempo: " + intersecta);
+                    break;
+
+                case 6:
+                    System.out.println("Saliendo del programa...");
+                    break;
+
+                default:
+                    System.out.println("Opcion no valida");
+                    break;
+            }
+        }
+
+        sc.close();
     }
+
+
 }
